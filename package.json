@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "replicate": "github:replicate/replicate-javascript"
-  },
-  "devDependencies": {
-    "prisma": "^4.12.0"
-  }
-}
