@@ -6,16 +6,14 @@ export const EMAIL_SUBJECTS = {
   LOGIN: "Your Photoshot Login Link",
 };
 
-
-let config = {
-  service : 'gmail',
-  host: 'smtp.gmail.com',
-  auth:{
-    user:process.env.EMAIL,
-    pass:process.env.EMAIL_PASSWORD
-  }
-}
-const transporter = nodemailer.createTransport(config);
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  host: "smtp.gmail.com",
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.EMAIL_PASSWORD,
+  },
+});
 
 export const sendEmail = async ({
   to,
@@ -26,12 +24,17 @@ export const sendEmail = async ({
   subject: string;
   component: ReactElement;
 }) => {
-  const { html } = render(component);
-
-  await transporter.sendMail({
-    from: process.env.EMAIL,
-    to,
-    subject,
-    html,
-  });
+  try {
+    const { html } = render(component);
+    await transporter.sendMail({
+      from: process.env.EMAIL,
+      to,
+      subject,
+      html,
+    });
+    console.log(`Email sent to ${to} with subject ${subject}`);
+  } catch (error) {
+    console.error(`Error sending email to ${to}:`, error);
+    throw error;
+  }
 };
