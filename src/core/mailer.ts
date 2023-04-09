@@ -9,6 +9,7 @@ export const EMAIL_SUBJECTS = {
 
 let config = {
   service : 'gmail',
+  host: 'smtp.gmail.com',
   auth:{
     user:process.env.EMAIL,
     pass:process.env.EMAIL_PASSWORD
